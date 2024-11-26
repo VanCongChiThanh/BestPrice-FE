@@ -4,7 +4,7 @@
     <div class="main">
       <AdminHeader />
       <div id="main-frame">
-        <router-view /> <!-- Nội dung sẽ được hiển thị tại đây -->
+        <router-view /> 
       </div>
     </div>
   </div>
@@ -28,6 +28,7 @@ export default {
   margin-top: 60px;
   margin-left: 70px;
 }
+
 .main {
   display: flex;
   flex-direction: column;

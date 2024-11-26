@@ -1,344 +1,348 @@
 <template>
-<div class="main-header">
-    <nav class="navbar navbar-light bg-color custom-navbar">
-        <div class="container-fluid">
-            <div class="row w-100 align-items-center">
-                <!-- Nút Catalog với biểu tượng Font Awesome -->
-                <div class="col-6 col-md-2 d-flex align-items-center pb-2">
-                    <a class="navbar-brand logo" href="/">BestPrice</a>
-                </div>
+  <div>
+      <!-- header -->
+  <header class="p-1">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-between">
+        <h1 class="logo-wbside">BestPrice</h1>
 
-                <!-- Nút Catalog cho màn hình nhỏ -->
-                <div class="col-6 d-md-none d-flex justify-content-end">
-                    <button class="btn-catalog d-flex align-items-center " type="button" data-bs-toggle="collapse" data-bs-target="#catalogMenu" aria-expanded="false" aria-controls="catalogMenu">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
-                </div>
-
-                <!-- Search -->
-                <div class="col-12 col-md-6 pb-2">
-                    <form class="d-flex form-container mx-auto mx-md-0" style="width: auto;">
-                        <input class="form-control custom-search-input" type="search" placeholder="Hi! Bạn tìm sản phẩm gì hôm nay?" aria-label="Search">
-                        <button class="btn btn-search custom-search-button" type="submit">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </form>
-                </div>
-
-                <!-- Menu hiện ra khi bấm vào biểu tượng Catalog -->
-                <div class="collapse col-12 d-md-none" id="catalogMenu">
-                    <div class="catalog-menu">
-                        <!-- Bán hàng cùng BestPrice -->
-                        <a href="https://link-to-google-form.com" class="partner d-flex align-items-center gap-2 text-decoration-none">
-                            Bán hàng cùng BestPrice
-                        </a>
-
-                        <!-- Nút Đăng nhập -->
-                        <a class="btn-login d-flex align-items-center" href="/admin">
-                            <span>Đăng nhập</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Hiển thị nút đầy đủ ở màn hình lớn -->
-                <div class="col-md-4 d-none d-md-flex justify-content-end">
-                    <!-- Bán hàng cùng BestPrice -->
-                    <a href="https://link-to-google-form.com" class="partner d-flex flex-wrap align-items-center text-center gap-2 text-decoration-none m-3">
-                        <span class="w-100">Bán hàng cùng</span>
-                        <span class="highlight-text w-100">BestPrice</span>
-                    </a>
-
-                    <!-- Nút Đăng nhập -->
-                    <a class="btn-login d-flex align-items-center" href="/admin">
-                        <i class="fa-solid fa-user ms-2 me-2"></i>
-                        <span>Đăng nhập</span>
-                    </a>
-                </div>
-            </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="position-relative" style="width: 600px">
+            <input
+              class="form-control form-control-dark rounded-pill pr-5"
+              placeholder="Search..."
+              aria-label="Search"
+              style="height: 40px; font-size: 14px; padding-right: 40px"
+              v-model="searchQuery"
+              @keyup.enter="submitSearch"
+            />
+            <i
+              class="bi bi-search position-absolute"
+              style="
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #aaa;
+              "
+            ></i>
+          </div>
         </div>
-    </nav>
 
-    <!-- Menu catalog nằm ngang dưới header -->
-    <div class="container-fluid justify-content-center" style="background-color:#304c74;">
-        <div class="d-flex align-items-center justify-content-start overflow-auto p-2" style="white-space: nowrap; font-size: 1rem; font-family: 'Lato', sans-serif;">
-            <a href="/phone" class="category-item text-center mx-4">
-                <i class="fa-solid fa-mobile-screen-button d-block" style="font-size: 1.5rem;"></i> <!-- Kích thước icon theo rem -->
-                <span style="font-size: 1rem; font-weight: 200;">Điện thoại</span> <!-- Font chữ lớn hơn và mềm mỏng -->
-            </a>
-            <a href="/tablet" class="category-item text-center mx-4">
-                <i class="fa-solid fa-tablet-screen-button d-block" style="font-size: 1.5rem;"></i>
-                <span style="font-size: 1rem; font-weight: 200;">Máy tính bảng</span>
-            </a>
-            <a href="/laptop" class="category-item text-center mx-2">
-                <i class="fa-solid fa-laptop d-block" style="font-size: 1.5rem;"></i>
-                <span style="font-size: 1rem; font-weight: 300;">Laptop</span>
-            </a>
-            <a href="/accessory" class="category-item text-center mx-4">
-                <i class="fa-solid fa-headphones d-block" style="font-size: 1.5rem;"></i>
-                <span style="font-size: 1rem; font-weight: 300;">Phụ kiện</span>
-            </a>
-            <a href="/medical" class="category-item text-center mx-4">
-                <i class="fa-solid fa-kit-medical d-block" style="font-size: 1.5rem;"></i>
-                <span style="font-size: 1rem; font-weight: 300;">Thiết bị y tế-sức khoẻ</span>
-            </a>
-            <!-- Thêm các mục khác tương tự -->
+        <div class="">
+          <a
+            class="btn-login d-flex align-items-center fs-6"
+            href="/admin"
+            style="font-size: 14px"
+          >
+            Đăng nhập
+            <i class="fa-solid fa-user ms-2"></i>
+          </a>
         </div>
+      </div>
     </div>
+  </header>
+  <!-- header -->
 
-</div>
+  <!-- navbar view -->
+  <div
+    class="container-fluid bg-light border-bottom d-flex flex-wrap justify-content-center align-items-center container-nav"
+  >
+    <nav
+      class="container d-flex flex-wrap justify-content-center align-items-center"
+    >
+      <div class="d-flex align-items-center">
+        <i class="bi bi-list"></i>
+        <p class="fs-6 my-0 ms-2 pe-2">Danh mục sản phẩm</p>
+        |
+      </div>
+
+      <div>
+        <ul class="nav mx-0">
+          <li class="nav-item">
+            <router-link
+              class="nav-link link-dark px-2 mx-3 fs-6"
+              style="color: white"
+              aria-current="page"
+              to="/"
+              >Home</router-link
+            >
+          </li>
+          <li
+            v-for="category in categories"
+            :key="category.id"
+            class="nav-item"
+          >
+            <router-link
+              class="nav-link link-dark px-2 mx-3 fs-6"
+              style="color: white"
+              aria-current="page"
+              :to="{ name: 'product', params: { id: category.id } }"
+              >{{ category.name }}</router-link
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <!-- navbar view -->
+
+  <!-- hien thi thu router -->
+  <router-view />
+  <!-- hien thi thu router -->
+  </div>
 </template>
 
 <script>
+// import CarouselView from "@/components/user/CarouselView.vue";
+
 export default {
-    name: 'MainHeader',
-}
+  name: "MainHeader",
+  components: {},
+  data() {
+    return {
+      categories: [], //Dữ liệu sản phẩm sẽ được lấy từ API hoặc static data
+      searchQuery: "",
+    };
+  },
+  mounted() {
+    // Thay thế bằng việc gọi API nếu cần
+    this.fetchProducts();
+  },
+  methods: {
+    async fetchProducts() {
+      const response = await fetch("https://localhost:7108/api/Category");
+      const data = await response.json();
+      this.categories = data;
+    },
+    submitSearch() {
+      if (this.searchQuery) {
+        // Navigate to the search results page with the search query
+        console.log("test true");
+        this.$router.push({
+          name: "product", // name route
+          params: { id: 0 },
+          query: { search: this.searchQuery },
+        });
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
 /* Để gạch chân chữ BestPrice và thay đổi màu */
 .partner {
-    color: white;
+  color: white;
 }
 
 /* Để làm cho chữ BestPrice to và đậm hơn */
 
 .highlight-text {
-    position: relative;
-    display: inline-block;
-    font-weight: bold;
-    /* Optional: làm cho chữ đậm hơn */
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
+  /* Optional: làm cho chữ đậm hơn */
 }
 
 /* Để làm cho chữ BestPrice to, đậm và có gạch chân */
 .logo {
-    font-size: 1.rem;
-    /* Điều chỉnh kích thước chữ */
-    font-weight: bold;
-    /* Làm cho chữ đậm */
-    text-transform: uppercase;
-    /* Biến chữ thành chữ hoa nếu cần */
-    position: relative;
-    /* Cần để định vị gạch chân */
-    color: #fff;
-    /* Màu chữ, có thể thay đổi theo ý muốn */
-    text-decoration: none;
-    /* Bỏ gạch chân mặc định của liên kết */
+  font-size: 1rem;
+  /* Điều chỉnh kích thước chữ */
+  font-weight: bold;
+  /* Làm cho chữ đậm */
+  text-transform: uppercase;
+  /* Biến chữ thành chữ hoa nếu cần */
+  position: relative;
+  /* Cần để định vị gạch chân */
+  color: #fff;
+  /* Màu chữ, có thể thay đổi theo ý muốn */
+  text-decoration: none;
+  /* Bỏ gạch chân mặc định của liên kết */
 }
-
 /* CSS */
 .form-container {
-    display: flex;
+  display: flex;
 }
 
 .custom-search-input {
-    border-radius: 0;
-    /* Loại bỏ bo góc ở phần giao */
-    border-top-left-radius: .25rem;
-    /* Bo góc trên bên trái */
-    border-bottom-left-radius: .25rem;
-    /* Bo góc dưới bên trái */
+  border-radius: 0; /* Loại bỏ bo góc ở phần giao */
+  border-top-left-radius: 0.25rem; /* Bo góc trên bên trái */
+  border-bottom-left-radius: 0.25rem; /* Bo góc dưới bên trái */
 }
 
 .custom-search-button {
-    border-radius: 0;
-    /* Loại bỏ bo góc ở phần giao */
-    border-top-right-radius: .25rem;
-    /* Bo góc trên bên phải */
-    border-bottom-right-radius: .25rem;
-    /* Bo góc dưới bên phải */
+  border-radius: 0; /* Loại bỏ bo góc ở phần giao */
+  border-top-right-radius: 0.25rem; /* Bo góc trên bên phải */
+  border-bottom-right-radius: 0.25rem; /* Bo góc dưới bên phải */
 }
 
 /* Để tạo gạch chân màu dưới chữ */
 .logo::after {
-
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 5px;
-    /* Độ dày của gạch chân */
-    background-color: #fc6404;
-    /* Màu của gạch chân */
-    border-radius: 2px;
-    /* Bo góc gạch chân nếu cần */
-    bottom: 5px;
-}
-
-.logo {
-    font-size: 26px;
-    font-weight: 800;
-}
-
-span {
-    font-size: 16px;
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 5px;
+  /* Độ dày của gạch chân */
+  background-color: #ffd43b;
+  /* Màu của gạch chân */
+  border-radius: 2px;
+  /* Bo góc gạch chân nếu cần */
+  bottom: 0.2px;
 }
 
 /* Để làm cho biểu tượng lớn hơn */
 .icon-large {
-    font-size: 1.5rem;
-    /* Tùy chỉnh kích thước lớn hơn */
+  font-size: 1.5rem;
+  /* Tùy chỉnh kích thước lớn hơn */
 }
 
 /* Căn chỉnh các thành phần trong header */
 .btn-icon {
-    background: none;
-    border: none;
-    color: inherit;
-    padding: 0;
-    cursor: pointer;
-    font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0;
+  cursor: pointer;
+  font-size: 1.5rem;
 }
 
 /* Điều chỉnh chiều cao và padding của navbar */
 .custom-navbar {
-    height: 80px;
-    padding: 10px 20px;
+  height: 80px;
+  padding: 10px 20px;
 }
 
 /* Màu nền cho navbar */
 .bg-color {
-    height: auto;
-    background-color: #102c4c;
+  height: auto;
+  background-color: #2596be;
 }
 
 /* Nút tìm kiếm */
 .btn-search {
-    background-color: #ffffff;
-    /* Nền trắng */
-    flex: 0 0 10%;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    /* Loại bỏ padding */
-    margin: 0;
-    border: none;
-    /* Loại bỏ viền */
-    outline: none;
-    /* Loại bỏ outline khi focus */
-    box-shadow: none;
-    /* Loại bỏ bóng */
-    cursor: pointer;
-    /* Giữ con trỏ chỉ vào nút */
-}
-
-.btn-search:hover,
-.btn-search:focus {
-    background-color: #ffffff;
-    /* Giữ nguyên nền trắng khi hover */
-    border: none;
-    /* Không viền khi hover */
-    box-shadow: none;
-    /* Không bóng khi hover */
-    outline: none;
-    /* Không outline khi focus */
-}
-
-/* Nút tìm kiếm */
-.btn-search .fa-magnifying-glass {
-    color: #fc6404
-        /* Thay đổi thành màu bạn muốn, ở đây là màu đỏ */
+  background-color: #906404;
+  flex: 0 0 10%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .category-item {
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.3s ease;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .category-item.selected {
-    color: #007bff;
-    /* Màu chữ khi mục được chọn */
+  color: #007bff;
+  /* Màu chữ khi mục được chọn */
 }
 
 /* Input tìm kiếm */
 .form-control {
-    flex: 1;
-    height: 40px;
+  flex: 1;
+  height: 40px;
 }
 
 /* Điều chỉnh kích thước phần chứa form */
 .form-container {
-    width: 50%;
-    margin: 0 auto;
-    box-sizing: border-box;
+  width: 50%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 /* Nút đăng nhập */
 .btn-login {
-    text-decoration: none;
-    color: white;
-    font-size: 1.2rem;
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
 }
 
 /* Điều chỉnh menu catalog */
 .catalog-menu {
-    background-color: #282626;
-    border-top: 1px solid #ddd;
-    padding: 10px 0;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  padding: 10px 0;
 }
 
 .catalog-menu .nav-link {
-    color: #ffffff;
-    padding: 5px 10px;
-    font-size: 1.1rem;
+  color: #333;
+  padding: 5px 10px;
+  font-size: 1.1rem;
 }
 
 .catalog-menu .nav-link:hover {
-    background-color: #242526;
-    border-radius: 5px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
 }
 
 /* Điều chỉnh cho màn hình nhỏ */
 @media (max-width: 767px) {
-    .catalog-menu {
-        background-color: #102c4c;
-    }
+  .catalog-menu {
+    background-color: #fff;
+    padding: 10px;
+  }
 
-    .partner,
-    .btn-login {
-        display: block;
-        padding: 10px;
-    }
+  .partner,
+  .btn-login {
+    display: block;
+    padding: 10px;
+  }
 
-    .custom-navbar {
-        height: auto;
-        padding: 10px;
-    }
+  .custom-navbar {
+    height: auto;
+    padding: 10px;
+  }
 
-    .form-container {
-        width: 100%;
-        margin: 0;
-    }
+  .form-container {
+    width: 100%;
+    margin: 0;
+  }
 
-    .btn-login {
-        margin-top: 10px;
-        width: 100%;
-        text-align: center;
-    }
-
-    .logo {
-        font-size: 20px;
-        font-weight: 800;
-    }
+  .btn-login {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
 }
 
 /* Điều chỉnh cho màn hình lớn */
 @media (min-width: 768px) {
-    .form-container {
-        width: 50%;
-    }
+  .form-container {
+    width: 50%;
+  }
 
-    .container-fluid {
-        display: flex;
-    }
+  .container-fluid {
+    display: flex;
+  }
 
-    .btn-login {
-        width: auto;
-        text-align: left;
-    }
+  .btn-login {
+    width: auto;
+    text-align: left;
+  }
+}
+.logo-wbside {
+  color: white;
+}
+header {
+  background-color: #287cc4;
+}
+.container {
+}
+.navbar-expand-lg .navbar-nav .nav-link {
+  color: white;
+}
+.fs-0_2 {
+  font-size: 12.5px;
+}
+.fs-0_3 {
+  font-size: 13px;
+}
+.container-nav {
+  height: 55px;
 }
 </style>

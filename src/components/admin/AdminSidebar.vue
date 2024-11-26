@@ -10,21 +10,21 @@
     </div>
     <ul class="sidebar-nav">
         <li class="sidebar-item">
-            <a href="#" class="sidebar-link" title="Profile">
-                <i class="lni lni-user"></i>
-                <span>Profile</span>
-            </a>
+            <router-link to="/admin" class="sidebar-link" title="Tổng quan">
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Tổng quan</span>
+            </router-link>
         </li>
         <li class="sidebar-item ">
             <router-link to="/admin/crawl" class="sidebar-link" title="Crawl">
                 <i class="lni lni-cloud-download"></i>
-                <span>Crawl</span>
+                <span>Thu thập dữ liệu</span>
             </router-link>
         </li>
 
         <li class="sidebar-item">
             <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#manage" aria-expanded="false" aria-controls="auth">
-                <i class="lni lni-protection"></i>
+                <i class="fa-solid fa-list"></i>
                 <span>Quản lý</span>
             </a>
             <ul id="manage" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
@@ -32,14 +32,16 @@
                     <a href="#" class="sidebar-link">Quản lý người dùng</a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">Quản lý sản phẩm</a>
+                    <router-link to="/admin/product" class="sidebar-link" title="productManagement">
+                        Quản lý sản phẩm
+                    </router-link>
                 </li>
             </ul>
         </li>
         <li class="sidebar-item">
             <a href="#" class="sidebar-link" title="Thông báo">
                 <i class="lni lni-popup"></i>
-                <span >Thông báo</span>
+                <span>Thông báo</span>
             </a>
         </li>
         <li class="sidebar-item">
@@ -59,7 +61,6 @@
 </template>
 
 <script>
-
 export default {
     name: "AdminSidebar",
     data() {
@@ -106,8 +107,7 @@ body {
 }
 
 #sidebar {
-    width: 70px;
-    min-width: 70px;
+    max-width: 70px;
     z-index: 1000;
     transition: all .25s ease-in-out;
     background-color: #0e2238;
@@ -120,8 +120,8 @@ body {
 }
 
 #sidebar.expand {
-    width: 260px;
-    min-width: 260px;
+    width: 210px;
+    min-width: 210px;
 }
 
 .toggle-btn {

@@ -4,11 +4,9 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-
+import "bootstrap/dist/css/bootstrap.css";
 const app = createApp(App)
 
-// Sử dụng router trong ứng dụng
 app.use(router)
 app.use(VueAxios,axios)
-// Mount ứng dụng
 app.mount('#app')
