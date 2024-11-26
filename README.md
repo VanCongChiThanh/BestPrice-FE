@@ -29,12 +29,12 @@ Run the following command to install the required dependencies:
 ```bash
 npm install
 ```
-###2. Start the Development Server
+### Start the Development Server
 To start the development server with hot-reload capabilities, use:
 ```bash
 npm run serve
 ```
-###3. Build for Production
+### Build for Production
 Generate an optimized build for production deployment by running:
 ```bash
 npm run build
