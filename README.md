@@ -28,26 +28,14 @@
 Run the following command to install the required dependencies:
 ```bash
 npm install
-
-## Project setup
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
+###2. Start the Development Server
+To start the development server with hot-reload capabilities, use:
+```bash
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
+###3. Build for Production
+Generate an optimized build for production deployment by running:
+```bash
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
