@@ -1,6 +1,7 @@
 <template>
   <div>
-      <br />
+    
+  <br />
   <section>
     <div class="container-lg">
       <div class="row">
@@ -23,14 +24,15 @@
           </div>
 
           <select
+            @change="sortProducts"
             id="sortOptions"
             aria-label="Sort options"
             class="form-select"
             style="width: 200px"
           >
             <option value="default">Sắp xếp giá mặc định</option>
-            <option value="low-to-high">Giá từ thấp đến cao</option>
-            <option value="high-to-low">Giá từ cao đến thấp</option>
+            <option value="asc">Giá tăng dần</option>
+            <option value="desc">Giá giảm dần</option>
           </select>
         </div>
 
@@ -51,7 +53,7 @@
                 <figure class="figure-wrapper mb-0">
                   <a href="#" title="Product Title">
                     <img
-                      :src="product.imageUrl"
+                      :src="product.image_url"
                       alt="Product Thumbnail"
                       class="tab-image img-fluid"
                       style="height: 200px; width: 200px; object-fit: fill"
@@ -72,7 +74,8 @@
                       viewProductPrice(
                         product.id,
                         product.name,
-                        product.imageUrl
+                        product.image_url,
+                        product.price_from
                       );
                       addLocalStore(product);
                     "
@@ -81,7 +84,7 @@
                       class="btn btn-danger rounded-pill text-center align-items-center d-flex"
                       style="height: 26px; font-size: 14px"
                     >
-                      Tới nơi bán
+                      So sánh giá
                     </button>
                   </router-link>
                 </div>
@@ -99,7 +102,10 @@
                   <div
                     class="priceitem text-start mt-1 d-flex justify-content-center"
                   >
-                    <span class="text-danger my-0">Giá từ 17.500.000 đ</span>
+                    <span class="text-danger my-0"
+                      >Giá từ
+                      {{ product.price_from.toLocaleString("vi-VN") }} đ</span
+                    >
                   </div>
                 </div>
               </div>
@@ -213,6 +219,13 @@ export default {
       const data = await response.json();
       this.products = data;
     },
+    sortProducts() {
+      if (document.getElementById("sortOptions").value === "asc") {
+        this.products.items.sort((a, b) => a.price_from - b.price_from);
+      } else if (document.getElementById("sortOptions").value === "desc") {
+        this.products.items.sort((a, b) => b.price_from - a.price_from);
+      }
+    },
     changePage(page) {
       this.pageNumber = page;
       this.fetchProducts();
@@ -226,12 +239,12 @@ export default {
       this.nameCategory = data;
     },
 
-    viewProductPrice(id, name, imgUrl) {
+    viewProductPrice(id, name, imgUrl, price_from) {
       // console.log("huynhphamngoc");
       this.$router.push({
         name: "productprice",
         params: { id },
-        query: { name, imgUrl },
+        query: { name, imgUrl, price_from },
       });
     },
     addLocalStore(product) {

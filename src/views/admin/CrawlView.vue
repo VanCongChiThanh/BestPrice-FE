@@ -5,14 +5,14 @@
         <div class="col-md-12">
             <div class="card" style="height: 600px; overflow: hidden;">
                 <div class="card-header text-white d-flex justify-content-center align-items-center">
-                    <h4 class="mb-0">Crawl dữ liệu</h4>
+                    <h4 class="mb-0">Thu thập dữ liệu</h4>
                 </div>
                 <div class="card-body" style="overflow-y: auto;">
                     <form @submit.prevent="submitCrawlForm">
                         <div id="accordionExample" class="accordion">
                             <div v-for="(data, index) in formData" :key="index" class="accordion-item">
                                 <div class="d-flex align-items-center">
-                                    
+
                                     <h3 class="accordion-header flex-grow-1" :id="'heading' + index">
                                         <button class="accordion-button" type="button" :data-bs-toggle="'collapse'" :data-bs-target="'#collapse' + index" :aria-expanded='false' :aria-controls="'collapse' + index">
                                             {{ data.site_name || 'Nhập thông tin cần lấy dữ liệu' }}
@@ -78,11 +78,11 @@
                             </div>
                         </div>
                         <div class="text-center mt-4">
-                            <button type="button" class="btn btn-secondary me-3" @click="addForm">
-                                Add Another
+                            <button type="button" class="btn btn-primary me-3" @click="addForm">
+                                Thêm
                             </button>
-                            <button type="submit" class="btn btn-primary">
-                                Crawl Data
+                            <button type="submit" class="btn btn-success">
+                                Bắt đầu thu thập dữ liệu
                             </button>
                         </div>
                     </form>
@@ -222,6 +222,7 @@ export default {
                         const response = await this.axios.post('http://localhost:5000/crawl', data);
                         const products = response.data.map(product => ({
                             ...product,
+                            site_name: data.site_name,
                             isEditing: false
                         }));
                         this.statusLog.push(...products);
@@ -259,25 +260,26 @@ export default {
         },
         async saveCrawledData() {
             try {
-
                 console.log('Current statusLog:', this.statusLog);
 
-                const products = this.statusLog;
-
-                const productsToSave = products.map(product => ({
-                    product_name: product.product_name || '',
-                    product_price: product.product_price || '',
-                    product_link: product.product_link || '',
-                    product_image: product.product_image || ''
-                })).filter(product => product.product_name);
-
-                if (productsToSave.length === 0) {
-                    console.log('Không có sản phẩm hợp lệ để lưu.');
-                    return;
-                }
                 const selectedSites = this.formData.filter(data => data.isSelected);
 
                 for (const formData of selectedSites) {
+                    // Lọc sản phẩm thuộc site đang lưu
+                    const productsToSave = this.statusLog.filter(product => product.site_name === formData.site_name).map(product => ({
+                        product_name: product.product_name || '',
+                        product_price: product.product_price || '',
+                        product_link: product.product_link || '',
+                        product_image: product.product_image || ''
+                    }));
+
+                    console.log(`Sản phẩm cần lưu cho site ${formData.site_name}:`, productsToSave);
+
+                    if (productsToSave.length === 0) {
+                        console.log(`Không có sản phẩm hợp lệ để lưu cho site ${formData.site_name}.`);
+                        continue;
+                    }
+
                     const response = await this.axios.post('http://localhost:5000/add_products', {
                         products: productsToSave,
                         category_id: formData.category_id,

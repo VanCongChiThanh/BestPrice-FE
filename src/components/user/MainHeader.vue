@@ -1,94 +1,334 @@
 <template>
   <div>
-      <!-- header -->
-  <header class="p-1">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-between">
-        <h1 class="logo-wbside">BestPrice</h1>
+    <!-- header -->
+    <header class="p-1">
+      <div class="container">
+        <div
+          class="d-flex justify-content-between align-items-center justify-content-between"
+        >
+          <h1 class="logo-wbside">BestPrice</h1>
 
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="position-relative" style="width: 600px">
-            <input
-              class="form-control form-control-dark rounded-pill pr-5"
-              placeholder="Search..."
-              aria-label="Search"
-              style="height: 40px; font-size: 14px; padding-right: 40px"
-              v-model="searchQuery"
-              @keyup.enter="submitSearch"
-            />
-            <i
-              class="bi bi-search position-absolute"
-              style="
-                right: 15px;
-                top: 50%;
-                transform: translateY(-50%);
-                color: #aaa;
-              "
-            ></i>
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="position-relative" style="width: 400px">
+              <input
+                class="form-control form-control-dark rounded-pill pr-5"
+                placeholder="Search..."
+                aria-label="Search"
+                style="height: 40px; font-size: 14px; padding-right: 40px"
+                v-model="searchQuery"
+                @keyup.enter="submitSearch"
+              />
+              <i
+                class="bi bi-search position-absolute"
+                style="
+                  right: 15px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  color: #aaa;
+                "
+              ></i>
+            </div>
+          </div>
+
+          <div class="">
+            <div v-if="userInfo">
+              <span class="text-white me-3">
+                Xin chào, {{ userInfo.fullName }}
+              </span>
+              <!-- Kiểm tra nếu RoleId == 2 thì hiển thị nút Admin -->
+              <div v-if="userInfo.roleId === 2" style="display: inline">
+                <a class="btn btn-info mx-2" href="/admin">Admin</a>
+              </div>
+              <button type="button" class="btn btn-secondary" @click="logout">
+                Đăng xuất
+              </button>
+            </div>
+            <div v-else>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#loginModal"
+              >
+                Đăng nhập
+              </button>
+            </div>
           </div>
         </div>
+      </div>
+    </header>
+    <!-- header -->
 
-        <div class="">
-          <a
-            class="btn-login d-flex align-items-center fs-6"
-            href="/admin"
-            style="font-size: 14px"
+    <!-- Modal chứa form -->
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      aria-labelledby="loginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <!-- Tăng kích thước modal -->
+        <div class="modal-content">
+          <div
+            class="modal-header text-white"
+            style="background-color: #287cc4"
           >
-            Đăng nhập
-            <i class="fa-solid fa-user ms-2"></i>
-          </a>
+            <!-- Header nổi bật -->
+            <h5 class="modal-title" id="loginModalLabel">
+              Đăng nhập / Đăng ký
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Navigation Tabs -->
+            <ul
+              class="nav nav-pills mb-4 justify-content-center"
+              id="pills-tab"
+              role="tablist"
+            >
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="tab-login"
+                  data-bs-toggle="pill"
+                  data-bs-target="#pills-login"
+                  type="button"
+                  role="tab"
+                  aria-controls="pills-login"
+                  aria-selected="true"
+                >
+                  <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="tab-register"
+                  data-bs-toggle="pill"
+                  data-bs-target="#pills-register"
+                  type="button"
+                  role="tab"
+                  aria-controls="pills-register"
+                  aria-selected="false"
+                >
+                  <i class="bi bi-person-plus"></i> Đăng ký
+                </button>
+              </li>
+            </ul>
+
+            <!-- Content -->
+            <div class="tab-content" id="pills-tabContent">
+              <!-- Login form -->
+              <div
+                class="tab-pane fade show active"
+                id="pills-login"
+                role="tabpanel"
+                aria-labelledby="tab-login"
+              >
+                <form>
+                  <!-- Email input -->
+                  <div class="form-outline mb-3">
+                    <label class="form-label" for="loginUserName"
+                      ><i class="bi bi-envelope"></i> Tên đăng nhập</label
+                    >
+                    <input
+                      type="text"
+                      id="loginUserName"
+                      class="form-control"
+                      placeholder="Tên đăng nhập của bạn"
+                      ref="username"
+                    />
+                  </div>
+
+                  <!-- Password input -->
+                  <div class="form-outline mb-3">
+                    <label class="form-label" for="loginPassword"
+                      ><i class="bi bi-lock"></i> Mật khẩu</label
+                    >
+                    <input
+                      type="password"
+                      id="loginPassword"
+                      class="form-control"
+                      placeholder="Nhập mật khẩu của bạn"
+                      ref="password"
+                    />
+                  </div>
+
+                  <!-- Checkbox -->
+                  <div class="form-check mb-3">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="loginRememberMe"
+                    />
+                    <label class="form-check-label" for="loginRememberMe">
+                      Ghi nhớ tài khoản
+                    </label>
+                  </div>
+
+                  <!-- Submit button -->
+                  <button
+                    type="submit"
+                    class="btn btn-primary w-100"
+                    @click="submitLogin"
+                  >
+                    <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+                  </button>
+                </form>
+              </div>
+
+              <!-- Register form -->
+              <div
+                class="tab-pane fade"
+                id="pills-register"
+                role="tabpanel"
+                aria-labelledby="tab-register"
+              >
+                <form>
+                  <!-- Name input -->
+                  <div class="form-outline mb-3">
+                    <label class="form-label" for="registerUserName"
+                      ><i class="bi bi-person"></i>Tên đăng nhập</label
+                    >
+                    <input
+                      required
+                      ref="reusername"
+                      type="text"
+                      id="registerUserName"
+                      class="form-control"
+                      placeholder="Nhập tên đăng nhập của bạn"
+                    />
+                  </div>
+                  <!-- Password input -->
+                  <div class="form-outline mb-3">
+                    <label class="form-label" for="registerPassword"
+                      ><i class="bi bi-lock"></i> Mật khẩu</label
+                    >
+                    <input
+                      ref="repassword"
+                      required
+                      type="password"
+                      id="registerPassword"
+                      class="form-control"
+                      placeholder="Tạo mật khẩu"
+                    />
+                  </div>
+
+                  <!-- re Password input -->
+                  <div class="form-outline mb-3">
+                    <label class="form-label" for="registerRePassword"
+                      ><i class="bi bi-lock"></i> Nhập lại mật khẩu</label
+                    >
+                    <input
+                      ref="rerepassword"
+                      required
+                      type="password"
+                      id="registerRePassword"
+                      class="form-control"
+                      placeholder="Tạo lại mật khẩu trên"
+                    />
+                  </div>
+                  <!-- Name input -->
+                  <div class="form-outline mb-3">
+                    <label class="form-label" for="registerName"
+                      ><i class="bi bi-person"></i> Họ và Tên</label
+                    >
+                    <input
+                      ref="refullname"
+                      required
+                      type="text"
+                      id="registerName"
+                      class="form-control"
+                      placeholder="Nhập họ và tên của bạn"
+                    />
+                  </div>
+
+                  <!-- Email input -->
+                  <div class="form-outline mb-3">
+                    <label class="form-label" for="registerEmail"
+                      ><i class="bi bi-envelope"></i> Email</label
+                    >
+                    <input
+                      ref="reemail"
+                      type="email"
+                      id="registerEmail"
+                      class="form-control"
+                      placeholder="Nhập email của bạn"
+                    />
+                  </div>
+
+                  <div style="text-align: center; margin-bottom: 12px" class="">
+                    <span class="text-danger">{{ errorMessage }}</span>
+                  </div>
+
+                  <!-- Submit button -->
+                  <!-- @click="submitRegister" -->
+                  <button
+                    @click="submitRegister"
+                    type="button"
+                    class="btn btn-success w-100"
+                  >
+                    <i class="bi bi-person-plus"></i> Đăng ký
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </header>
-  <!-- header -->
 
-  <!-- navbar view -->
-  <div
-    class="container-fluid bg-light border-bottom d-flex flex-wrap justify-content-center align-items-center container-nav"
-  >
-    <nav
-      class="container d-flex flex-wrap justify-content-center align-items-center"
+    <div
+      class="container-fluid bg-light border-bottom d-flex flex-wrap justify-content-center align-items-center container-nav"
     >
-      <div class="d-flex align-items-center">
-        <i class="bi bi-list"></i>
-        <p class="fs-6 my-0 ms-2 pe-2">Danh mục sản phẩm</p>
-        |
-      </div>
+      <nav
+        class="container d-flex flex-wrap justify-content-center align-items-center"
+      >
+        <div class="d-flex align-items-center">
+          <i class="bi bi-list"></i>
+          <p class="fs-6 my-0 ms-2 pe-2">Danh mục sản phẩm</p>
+          |
+        </div>
 
-      <div>
-        <ul class="nav mx-0">
-          <li class="nav-item">
-            <router-link
-              class="nav-link link-dark px-2 mx-3 fs-6"
-              style="color: white"
-              aria-current="page"
-              to="/"
-              >Home</router-link
+        <div>
+          <ul class="nav mx-0">
+            <li class="nav-item">
+              <router-link
+                class="nav-link link-dark px-2 mx-3 fs-6"
+                style="color: white"
+                aria-current="page"
+                to="/"
+                >Home</router-link
+              >
+            </li>
+            <li
+              v-for="category in categories"
+              :key="category.id"
+              class="nav-item"
             >
-          </li>
-          <li
-            v-for="category in categories"
-            :key="category.id"
-            class="nav-item"
-          >
-            <router-link
-              class="nav-link link-dark px-2 mx-3 fs-6"
-              style="color: white"
-              aria-current="page"
-              :to="{ name: 'product', params: { id: category.id } }"
-              >{{ category.name }}</router-link
-            >
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-  <!-- navbar view -->
+              <router-link
+                class="nav-link link-dark px-2 mx-3 fs-6"
+                style="color: white"
+                aria-current="page"
+                :to="{ name: 'product', params: { id: category.id } }"
+                >{{ category.name }}</router-link
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <!-- navbar view -->
 
-  <!-- hien thi thu router -->
-  <router-view />
-  <!-- hien thi thu router -->
+    <!-- hien thi thu router -->
+    <router-view />
+    <!-- hien thi thu router -->
   </div>
 </template>
 
@@ -102,11 +342,27 @@ export default {
     return {
       categories: [], //Dữ liệu sản phẩm sẽ được lấy từ API hoặc static data
       searchQuery: "",
+      userInfo: JSON.parse(localStorage.getItem("userInfo")),
+      errorMessage: null,
     };
   },
+
   mounted() {
     // Thay thế bằng việc gọi API nếu cần
     this.fetchProducts();
+  },
+
+  //Khong can dung computed cho localstore cx duoc
+  computed: {
+    //compute la tinh toan lại gia trị khi giá trị phụ thuộc nó thay đổi
+    // Lấy thông tin người dùng từ localStorage (tuc la ham nay duoc goi khi userinfo thay doi gia tri)
+    //con Watch thi no se theo doi su thay doi cua 1 gia tri de thuc hien goi mot hanh dong ben ngoi ngaoi nhu goi API, watch khong trả ve 1 gia tri nhu vue
+    //Compute khac voi goi la la no tu dong goi con ham la minh phai thuc hien 1 loi goi ham
+    //=> khong thuc hien compute cho nay vi khong thu hien tinh taon gi ca
+    userInfoFromLocalStorage() {
+      const user = this.userInfo;
+      return user ? user : null;
+    },
   },
   methods: {
     async fetchProducts() {
@@ -123,6 +379,113 @@ export default {
           params: { id: 0 },
           query: { search: this.searchQuery },
         });
+      }
+    },
+    async submitLogin() {
+      const username = this.$refs.username.value;
+      const password = this.$refs.password.value;
+      try {
+        const response = await fetch(
+          `https://localhost:7108/api/Users/check-login?username=${encodeURIComponent(
+            username
+          )}&password=${encodeURIComponent(password)}`
+        );
+
+        if (response.ok) {
+          const user = await response.json();
+          localStorage.setItem("userInfo", JSON.stringify(user)); // Lưu thông tin người dùng
+          alert("Đăng nhập thành công!");
+          // console.log(user.FullName);
+          // this.$router.push("/dashboard");
+        } else if (response.status === 401) {
+          alert("Sai tên đăng nhập hoặc mật khẩu!");
+        } else {
+          console.error("Error:", response.statusText);
+          alert("Đã xảy ra lỗi khi đăng nhập.");
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+        alert("Không thể kết nối đến máy chủ.");
+      }
+    },
+    logout() {
+      // console.log(this.userInfo.roleId);
+      // Xóa thông tin người dùng khỏi localStorage
+      localStorage.removeItem("userInfo");
+      this.userInfo = null;
+      alert("Bạn chắc chắn đăng xuất.");
+    },
+    async submitRegister() {
+      const userName = this.$refs.reusername.value;
+      const password = this.$refs.repassword.value;
+      const repassword = this.$refs.rerepassword.value;
+      const fullName = this.$refs.refullname.value;
+      const address = "string";
+      const phoneNumber = "string";
+      const roleId = "1";
+
+      const response = await fetch("https://localhost:7108/api/Users");
+      const Users = await response.json();
+      // Kiểm tra tên đăng nhập
+      const userExists = Users.some(
+        (user) => user.userName === this.$refs.reusername.value
+      );
+
+      if (userExists) {
+        this.errorMessage = "Tên đăng nhập đã tồn tại";
+        return;
+      }
+
+      if (userName == "" || password == "" || fullName == "") {
+        this.errorMessage = "Lỗi nhập dữ liệu";
+        return;
+      }
+
+      if (repassword !== password) {
+        console.log(userName + " " + password);
+        this.errorMessage = "Nhập lại mật khẩu không chính xác";
+        return;
+      }
+
+      //du lieu gui len
+      const registerForm = {
+        userName,
+        password,
+        fullName,
+        address,
+        phoneNumber,
+        roleId,
+      };
+
+      try {
+        // Gửi yêu cầu POST đến API để đăng ký tài khoản
+        const response = await fetch(
+          "https://localhost:7108/api/Users/create-user",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(registerForm), // Chuyển form đăng ký thành JSON
+          }
+        );
+
+        const data = await response.json(); // Lấy dữ liệu trả về từ API
+
+        // Kiểm tra nếu đăng ký thành công
+        if (response.ok) {
+          alert("Đăng ký thành công");
+          this.errorMessage = "";
+        } else {
+          alert("Đã xảy ra lỗi");
+          this.errorMessage =
+            data.message || "Đã có lỗi xảy ra. Vui lòng thử lại.";
+        }
+      } catch (error) {
+        alert("Loi");
+        // Xử lý lỗi khi gửi yêu cầu
+        this.errorMessage = "Đã có lỗi xảy ra. Vui lòng thử lại.";
+        console.error(error);
       }
     },
   },
