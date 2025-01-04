@@ -6,7 +6,8 @@
         <div
           class="d-flex justify-content-between align-items-center justify-content-between"
         >
-          <h1 class="logo-wbside">BestPrice</h1>
+          <h1 class="logo-wbside"> <a href="/" class="text-white">BestPrice</a>
+          </h1>
 
           <div class="d-flex align-items-center justify-content-between">
             <div class="position-relative" style="width: 400px">

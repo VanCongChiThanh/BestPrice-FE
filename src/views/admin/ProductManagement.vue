@@ -25,7 +25,7 @@
                 <tr v-for="product in paginatedProducts" :key="product.id">
                     <td>{{ product.id }}</td>
                     <td>{{ product.name }}</td>
-                    <td><img :src="product.imageUrl" alt="Product Image" style="width: 100px; height: auto;"></td>
+                    <td><img :src="product.image_url" alt="Product Image" style="width: 100px; height: auto;"></td>
                     <td style="padding: 0;">
                         <div class="d-flex justify-content-center align-items-center">
                             <button class="btn btn-link text-primary" @click="editProduct(product)" title="Edit">
